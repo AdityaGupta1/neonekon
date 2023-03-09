@@ -23,25 +23,23 @@ std::map<FString, std::function<void(std::vector<uPtr<AttackPhase>>&)>> AttackPh
 void AttackPhaseFactory::createDebug(std::vector<uPtr<AttackPhase>>& phases)
 {
     uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
+    {
+        uPtr<ANT> antPrint1 = mkU<ANT>();
+        antPrint1->attack = mkU<AttackDebugPrintMessage>("joe");
+        antPrint1->transitions = {
+            {"print2", 1}
+        };
+        phase1->addAnt("print1", std::move(antPrint1));
 
-    uPtr<ANT> antPrint1 = mkU<ANT>();
-    antPrint1->attack = mkU<AttackDebugPrintMessage>("joe");
-    antPrint1->transitions = {
-        {"print2", 1}
-    };
-    phase1->addAnt("print1", std::move(antPrint1));
+        uPtr<ANT> antPrint2 = mkU<ANT>();
+        antPrint2->attack = mkU<AttackDebugPrintMessage>("biden");
+        antPrint2->transitions = {
+            {"print1", 1}
+        };
+        phase1->addAnt("print2", std::move(antPrint2));
 
-    uPtr<ANT> antPrint2 = mkU<ANT>();
-    antPrint2->attack = mkU<AttackDebugPrintMessage>("biden");
-    antPrint2->transitions = {
-        {"print1", 1}
-    };
-    phase1->addAnt("print2", std::move(antPrint2));
-
-    phase1->setAnt("print1");
-
-    //uPtr<AttackPhase> phase2 = mkU<AttackPhase>();
+        phase1->setAnt("print1");
+    }
 
     phases.push_back(std::move(phase1));
-    //phases.push_back(std::move(phase2));
 }
