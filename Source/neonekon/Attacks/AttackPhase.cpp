@@ -28,7 +28,7 @@ void AttackPhase::setAnt(const std::string id)
 	currentAnt->attack->reset();
 }
 
-bool AttackPhase::onBeat(const AActor& actor)
+bool AttackPhase::onBeat(AActor& actor)
 {
 	bool attackDone = currentAnt->attack->doNextAction(actor);
 	if (!attackDone)

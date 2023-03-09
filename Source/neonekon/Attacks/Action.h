@@ -15,5 +15,5 @@ public:
 	Action();
 	virtual ~Action() = default;
 
-	virtual void doAction(const AActor& actor) = 0;
+	virtual void doAction(AActor& actor) = 0;
 };

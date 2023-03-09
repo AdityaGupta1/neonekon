@@ -7,7 +7,7 @@ ActionDebugPrint::ActionDebugPrint(std::string message)
     : message(message)
 {}
 
-void ActionDebugPrint::doAction(const AActor& actor)
+void ActionDebugPrint::doAction(AActor& actor)
 {
     GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::White, FString(message.c_str()));
 }

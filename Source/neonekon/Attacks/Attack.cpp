@@ -7,7 +7,7 @@ Attack::Attack()
     : actions(), nextAction(0)
 {}
 
-bool Attack::doNextAction(const AActor& actor) 
+bool Attack::doNextAction(AActor& actor) 
 {
     actions[nextAction]->doAction(actor);
     nextAction++;

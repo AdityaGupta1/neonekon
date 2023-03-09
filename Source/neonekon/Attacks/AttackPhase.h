@@ -38,5 +38,5 @@ public:
 	void addAnt(const std::string id, std::unique_ptr<AttackAndTransitions> ant);
 	void setAnt(const std::string id);
 	
-	bool onBeat(const AActor& actor); // return true if attack is done
+	bool onBeat(AActor& actor); // return true if attack is done
 };

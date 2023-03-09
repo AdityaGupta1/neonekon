@@ -7,15 +7,10 @@
 #include "CoreMinimal.h"
 
 /**
- * 
+ *
  */
-class NEONEKON_API ActionDebugPrint: public Action
+class NEONEKON_API ActionRest : public Action
 {
-private:
-	const std::string message;
-
 public:
-	ActionDebugPrint(std::string message);
-
 	void doAction(AActor& actor) override;
 };
