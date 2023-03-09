@@ -13,7 +13,7 @@ AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AActor> project
     for (int i = 0; i < length; ++i)
     {
         float angleOffsetReal = angleOffset;
-        if (length % 2 == 1)
+        if (i % 2 == 1)
         {
             angleOffsetReal += alternateAngleOffset;
         }
