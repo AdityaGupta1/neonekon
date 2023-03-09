@@ -5,7 +5,7 @@
 
 #include "neonekon/Attacks/Actions/ActionShotgun.h"
 
-AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AActor> projectileClass, int numBullets, int length, float angleOffset)
+AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, int length, float angleOffset)
     : Attack()
 {
     float alternateAngleOffset = 180.0f / numBullets;
@@ -19,10 +19,11 @@ AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AActor> project
         }
 
         ActionShotgun action = ActionShotgun::fromCircle(projectileClass, numBullets, angleOffsetReal);
+        action.setProjSetupFunction([](AProjectileBase* proj) { proj->speed = 300; });
         this->actions.push_back(std::make_unique<ActionShotgun>(action));
     }
 }
 
-AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AActor> projectileClass, int numBullets, int length)
+AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, int length)
     : AttackAlternatingRings(projectileClass, numBullets, length, 0)
 {}

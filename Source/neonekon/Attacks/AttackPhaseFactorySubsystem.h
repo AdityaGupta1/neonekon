@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AttackPhase.h"
+#include "neonekon/Attacks/Projectiles/ProjectileBase.h"
 
 #include <map>
 
@@ -26,7 +27,7 @@ public:
 private:
     std::map<FString, std::function<void(UAttackPhaseFactorySubsystem&, std::vector<std::unique_ptr<AttackPhase>>&)>> phaseFunctionMap;
 
-    TSubclassOf<class AActor> bullet;
+    TSubclassOf<class AProjectileBase> bullet;
 
     void createDebug(std::vector<std::unique_ptr<AttackPhase>>& phases);
 
