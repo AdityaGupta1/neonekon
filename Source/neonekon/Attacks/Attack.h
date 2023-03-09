@@ -17,8 +17,9 @@ protected:
 	std::vector<std::unique_ptr<Action>> actions;
 	int nextAction;
 
-public:
 	Attack();
+
+public:
 	Attack(const Attack&) = delete;
 	Attack& operator=(const Attack&) = delete;
 	virtual ~Attack() = default;
