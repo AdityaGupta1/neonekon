@@ -38,5 +38,5 @@ public:
 	void addAttackAndTransitions(const std::string id, std::unique_ptr<AttackAndTransitions>& ant);
 	void setAttack(const std::string id);
 	
-	void onBeat(const AActor& actor);
+	bool onBeat(const AActor& actor);
 };

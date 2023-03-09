@@ -27,12 +27,12 @@ void AttackPhase::setAttack(const std::string id)
 	currentAnt = stateMachine[id].get();
 }
 
-void AttackPhase::onBeat(const AActor& actor) 
+bool AttackPhase::onBeat(const AActor& actor)
 {
 	bool attackDone = currentAnt->attack->doNextAction(actor);
 	if (!attackDone)
 	{
-		return;
+		return false;
 	}
 
 	int randomInt = FMath::RandRange(0, currentAnt->totalWeight);
@@ -41,11 +41,12 @@ void AttackPhase::onBeat(const AActor& actor)
 		if (randomInt < transition.weight)
 		{
 			setAttack(transition.id);
-			return;
+			return true;
 		}
 
 		randomInt -= transition.weight;
 	}
 
 	throw std::out_of_range("weight out of range");
+	return false;
 }
