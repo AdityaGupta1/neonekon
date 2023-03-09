@@ -11,7 +11,7 @@ AttackPhase::AttackPhase()
     : stateMachine(), currentAnt(nullptr)
 {}
 
-void AttackPhase::addAttackAndTransitions(const std::string id, std::unique_ptr<AttackAndTransitions>& ant)
+void AttackPhase::addAnt(const std::string id, std::unique_ptr<AttackAndTransitions>& ant)
 {
 	int totalWeight = 0;
 	for (const auto& transition : ant->transitions)
@@ -22,9 +22,10 @@ void AttackPhase::addAttackAndTransitions(const std::string id, std::unique_ptr<
 	stateMachine[id] = std::move(ant);
 }
 
-void AttackPhase::setAttack(const std::string id) 
+void AttackPhase::setAnt(const std::string id) 
 {
 	currentAnt = stateMachine[id].get();
+	currentAnt->attack->reset();
 }
 
 bool AttackPhase::onBeat(const AActor& actor)
@@ -40,7 +41,7 @@ bool AttackPhase::onBeat(const AActor& actor)
 	{
 		if (randomInt < transition.weight)
 		{
-			setAttack(transition.id);
+			setAnt(transition.id);
 			return true;
 		}
 

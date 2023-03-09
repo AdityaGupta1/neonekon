@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "neonekon/Attacks/Attack.h"
 
-#include "Attack.h"
+#include "CoreMinimal.h"
 
 /**
  * 

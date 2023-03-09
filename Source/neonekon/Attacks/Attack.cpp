@@ -18,3 +18,8 @@ bool Attack::isDone() const
 {
     return nextAction >= actions.size();
 }
+
+void Attack::reset()
+{
+    nextAction = 0;
+}

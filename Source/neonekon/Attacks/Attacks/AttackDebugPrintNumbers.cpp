@@ -3,7 +3,7 @@
 
 #include "AttackDebugPrintNumbers.h"
 
-#include "ActionDebugPrint.h"
+#include "neonekon/Attacks/Actions/ActionDebugPrint.h"
 #include <string>
 
 AttackDebugPrintNumbers::AttackDebugPrintNumbers(int length)

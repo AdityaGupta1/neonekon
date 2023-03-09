@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-
 #include "Action.h"
 
 #include "GameFramework/Actor.h"
+
+#include "CoreMinimal.h"
 
 /**
  * 
@@ -24,6 +24,7 @@ public:
 	Attack& operator=(const Attack&) = delete;
 	virtual ~Attack() = default;
 
-	bool doNextAction(const AActor& actor);
+	bool doNextAction(const AActor& actor); // return true if attack is done
 	bool isDone() const;
+	void reset();
 };

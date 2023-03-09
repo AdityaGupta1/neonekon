@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-
 #include <string>
 #include <unordered_map>
 
 #include "Attack.h"
+
+#include "CoreMinimal.h"
 
 struct Transition {
 	std::string id;
@@ -35,8 +35,8 @@ public:
 	AttackPhase& operator=(const AttackPhase&) = delete;
 	~AttackPhase() = default;
 
-	void addAttackAndTransitions(const std::string id, std::unique_ptr<AttackAndTransitions>& ant);
-	void setAttack(const std::string id);
+	void addAnt(const std::string id, std::unique_ptr<AttackAndTransitions>& ant);
+	void setAnt(const std::string id);
 	
-	bool onBeat(const AActor& actor);
+	bool onBeat(const AActor& actor); // return true if attack is done
 };
