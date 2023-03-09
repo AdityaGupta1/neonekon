@@ -9,5 +9,5 @@ ActionDebugPrint::ActionDebugPrint(std::string message)
 
 void ActionDebugPrint::doAction(const AActor& actor)
 {
-    std::cout << message << std::endl;
+    GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::White, FString(message.c_str()));
 }

@@ -3,19 +3,17 @@
 
 #include "AttackPhaseManager.h"
 
-#include <iostream>
+#include "AttackPhaseFactory.h"
 
 UAttackPhaseManager::UAttackPhaseManager()
-    : UObject(), phases(), isPhaseTransitionQueued(false), currentPhase(0)
+    : UObject(), phases(), currentPhase(0), isPhaseTransitionQueued(false)
 {}
 
 
 void UAttackPhaseManager::loadPhases(const FString phasesId)
 {
-    this->phases.clear();
     this->currentPhase = 0;
-
-    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, FString(TEXT("loading phases: ")) + phasesId);
+    AttackPhaseFactory::createPhases(phasesId, this->phases);
 }
 
 bool UAttackPhaseManager::onBeat(const AActor* actor)

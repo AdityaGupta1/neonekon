@@ -7,7 +7,7 @@
 #include <string>
 
 AttackDebugPrintNumbers::AttackDebugPrintNumbers(int length)
-    : Attack(), length(length)
+    : Attack()
 {
     for (int i = 0; i < length; ++i) 
     {

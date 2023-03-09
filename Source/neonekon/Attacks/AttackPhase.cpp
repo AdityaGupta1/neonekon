@@ -11,7 +11,7 @@ AttackPhase::AttackPhase()
     : stateMachine(), currentAnt(nullptr)
 {}
 
-void AttackPhase::addAnt(const std::string id, std::unique_ptr<AttackAndTransitions>& ant)
+void AttackPhase::addAnt(const std::string id, std::unique_ptr<AttackAndTransitions> ant)
 {
 	int totalWeight = 0;
 	for (const auto& transition : ant->transitions)
@@ -36,7 +36,7 @@ bool AttackPhase::onBeat(const AActor& actor)
 		return false;
 	}
 
-	int randomInt = FMath::RandRange(0, currentAnt->totalWeight);
+	int randomInt = FMath::RandRange(0, currentAnt->totalWeight - 1);
 	for (const auto& transition : currentAnt->transitions)
 	{
 		if (randomInt < transition.weight)

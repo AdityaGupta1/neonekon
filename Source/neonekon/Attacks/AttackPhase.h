@@ -35,7 +35,7 @@ public:
 	AttackPhase& operator=(const AttackPhase&) = delete;
 	~AttackPhase() = default;
 
-	void addAnt(const std::string id, std::unique_ptr<AttackAndTransitions>& ant);
+	void addAnt(const std::string id, std::unique_ptr<AttackAndTransitions> ant);
 	void setAnt(const std::string id);
 	
 	bool onBeat(const AActor& actor); // return true if attack is done

@@ -7,10 +7,10 @@
 #include "CoreMinimal.h"
 
 /**
- * 
+ *
  */
-class NEONEKON_API AttackDebugPrintNumbers : public Attack
+class NEONEKON_API AttackDebugPrintMessage : public Attack
 {
 public:
-	AttackDebugPrintNumbers(int length);
+	AttackDebugPrintMessage(const std::string message);
 };
