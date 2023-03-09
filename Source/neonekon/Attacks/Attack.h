@@ -23,6 +23,6 @@ public:
 	Attack& operator=(const Attack&) = delete;
 	virtual ~Attack() = default;
 
-	void doNextAction(const AActor& actor);
+	bool doNextAction(const AActor& actor);
 	bool isDone() const;
 };

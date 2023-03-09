@@ -7,11 +7,14 @@ Attack::Attack()
     : actions(), nextAction(0)
 {}
 
-void Attack::doNextAction(const AActor& actor) {
+bool Attack::doNextAction(const AActor& actor) 
+{
     actions[nextAction]->doAction(actor);
     nextAction++;
+    return isDone();
 }
 
-bool Attack::isDone() const {
+bool Attack::isDone() const 
+{
     return nextAction >= actions.size();
 }

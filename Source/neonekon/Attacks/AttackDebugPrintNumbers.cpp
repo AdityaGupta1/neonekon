@@ -9,7 +9,8 @@
 AttackDebugPrintNumbers::AttackDebugPrintNumbers(int length)
     : Attack(), length(length)
 {
-    for (int i = 0; i < length; ++i) {
+    for (int i = 0; i < length; ++i) 
+    {
         this->actions.push_back(std::make_unique<ActionDebugPrint>(std::to_string(i + 1)));
     }
 }
