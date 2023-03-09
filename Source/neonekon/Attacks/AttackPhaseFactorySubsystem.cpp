@@ -13,11 +13,20 @@
 
 #define ANT AttackAndTransitions
 
+// TSubclassOf<class AActor> getProjectile(std::string path)
+// {
+//     ConstructorHelpers::FObjectFinder<UBlueprint> projectile(UTF8_TO_TCHAR(path.c_str()));
+//     return (UClass*) projectile.Object->GeneratedClass;
+// }
+
 UAttackPhaseFactorySubsystem::UAttackPhaseFactorySubsystem()
     : UGameInstanceSubsystem(), phaseFunctionMap()
 {
     phaseFunctionMap[FString(TEXT("debug"))] = &UAttackPhaseFactorySubsystem::createDebug;
     phaseFunctionMap[FString(TEXT("dog 1"))] = &UAttackPhaseFactorySubsystem::createDog1;
+
+    ConstructorHelpers::FObjectFinder<UBlueprint> projectile(TEXT("/Script/Engine.Blueprint'/Game/Projectiles/Bullet.Bullet'"));
+    bullet = (UClass*)projectile.Object->GeneratedClass;
 }
 
 void UAttackPhaseFactorySubsystem::createPhases(const FString id, std::vector<uPtr<AttackPhase>>& phases)
@@ -53,27 +62,24 @@ void UAttackPhaseFactorySubsystem::createDebug(std::vector<uPtr<AttackPhase>>& p
 
 void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& phases)
 {
-    //ConstructorHelpers::FObjectFinder<UBlueprint> bullet(TEXT("/Script/Engine.Blueprint'/Game/Projectiles/Bullet.Bullet'"));
-    //TSubclassOf<class AActor> bulletClass = (UClass*)bullet.Object->GeneratedClass;
+    uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
+    {
+        uPtr<ANT> antAlterntingRings = mkU<ANT>();
+        antAlterntingRings->attack = mkU<AttackAlternatingRings>(this->bullet, 12, 4);
+        antAlterntingRings->transitions = {
+            {"rest", 1}
+        };
+        phase1->addAnt("alternating rings", std::move(antAlterntingRings));
 
-    //uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
-    //{
-    //    uPtr<ANT> antAlterntingRings = mkU<ANT>();
-    //    antAlterntingRings->attack = mkU<AttackAlternatingRings>(bulletClass, 12, 4);
-    //    antAlterntingRings->transitions = {
-    //        {"rest", 1}
-    //    };
-    //    phase1->addAnt("alternating rings", std::move(antAlterntingRings));
+        uPtr<ANT> antRest = mkU<ANT>();
+        antRest->attack = mkU<AttackRest>(4);
+        antRest->transitions = {
+            {"alternating rings", 1}
+        };
+        phase1->addAnt("rest", std::move(antRest));
 
-    //    uPtr<ANT> antRest = mkU<ANT>();
-    //    antRest->attack = mkU<AttackRest>(4);
-    //    antRest->transitions = {
-    //        {"alternating rings", 1}
-    //    };
-    //    phase1->addAnt("rest", std::move(antRest));
+        phase1->setAnt("rest");
+    }
 
-    //    phase1->setAnt("rest");
-    //}
-
-    //phases.push_back(std::move(phase1));
+    phases.push_back(std::move(phase1));
 }
