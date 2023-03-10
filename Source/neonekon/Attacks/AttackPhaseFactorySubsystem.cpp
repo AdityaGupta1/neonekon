@@ -9,7 +9,7 @@
 #include "Attacks/AttackDebugPrintMessage.h"
 #include "Attacks/AttackDebugPrintNumbers.h"
 #include "Attacks/AttackRest.h"
-#include "Attacks/AttackAlternatingRings.h"
+#include "Attacks/AttackRepeatingShotgun.h"
 #include "Attacks/AttackRotatingLasers.h"
 
 #define ANT AttackAndTransitions
@@ -69,18 +69,16 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
     uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
-        antAlterntingRings->attack = mkU<AttackAlternatingRings>(this->bullet, 12, 0.0, 4, 300);
+        antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 12, 0.0, 4, 300);
         antAlterntingRings->transitions = {
             {"rest", 1}
         };
-        phase1->addAnt("alternating rings", std::move(antAlterntingRings));
 
         uPtr<ANT> antRotatingLasers = mkU<ANT>();
         antRotatingLasers->attack = mkU<AttackRotatingLasers>(this->laserTelegraph, this->laser, 6, 60.0, 15.0, 2, 2, 7, 0);
         antRotatingLasers->transitions = {
             {"rest", 1}
         };
-        phase1->addAnt("rotating lasers", std::move(antRotatingLasers));
 
         uPtr<ANT> antRest = mkU<ANT>();
         antRest->attack = mkU<AttackRest>(2);
@@ -88,6 +86,9 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
             {"alternating rings", 2},
             {"rotating lasers", 1}
         };
+
+        phase1->addAnt("alternating rings", std::move(antAlterntingRings));
+        phase1->addAnt("rotating lasers", std::move(antRotatingLasers));
         phase1->addAnt("rest", std::move(antRest));
 
         phase1->setAnt("rest");
