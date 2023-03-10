@@ -65,7 +65,7 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
     uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
-        antAlterntingRings->attack = mkU<AttackAlternatingRings>(this->bullet, 12, 4);
+        antAlterntingRings->attack = mkU<AttackAlternatingRings>(this->bullet, 12, 4, 0.0, 300);
         antAlterntingRings->transitions = {
             {"rest", 1}
         };

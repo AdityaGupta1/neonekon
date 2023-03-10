@@ -13,7 +13,5 @@
 class NEONEKON_API AttackAlternatingRings : public Attack
 {
 public:
-	AttackAlternatingRings(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, int length, float angleOffset);
-
-	AttackAlternatingRings(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, int length);
+	AttackAlternatingRings(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, int duration, float angleOffset, float projSpeed);
 };
