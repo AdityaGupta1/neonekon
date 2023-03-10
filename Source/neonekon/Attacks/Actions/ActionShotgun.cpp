@@ -17,6 +17,11 @@ ActionShotgun ActionShotgun::fromCone(TSubclassOf<class AProjectileBase> project
     return ActionShotgun(projectileClass, numBullets, angleStart, bulletSpacing);
 }
 
+ActionShotgun ActionShotgun::fromSingleBullet(TSubclassOf<class AProjectileBase> projectileClass, float aimDirection)
+{
+    return ActionShotgun(projectileClass, 1, aimDirection, 0.0);
+}
+
 ActionShotgun ActionShotgun::fromCircle(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, float angleOffset)
 {
     float angleStart = angleOffset;

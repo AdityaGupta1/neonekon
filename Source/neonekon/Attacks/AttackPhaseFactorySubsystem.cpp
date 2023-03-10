@@ -6,6 +6,8 @@
 #include "neonekon/Util/SmartPointerHelp.h"
 #include "UObject/ConstructorHelpers.h"
 
+#include "Attacks/Operators/AttackUnion.h"
+
 #include "Attacks/AttackDebugPrintMessage.h"
 #include "Attacks/AttackDebugPrintNumbers.h"
 #include "Attacks/AttackRest.h"
@@ -75,7 +77,13 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
         };
 
         uPtr<ANT> antRotatingLasers = mkU<ANT>();
-        antRotatingLasers->attack = mkU<AttackRotatingLasers>(this->laserTelegraph, this->laser, 6, 60.0, 15.0, 2, 2, 7, 0);
+        uPtr<AttackUnion> attackRotatingLasersUnion = mkU<AttackUnion>();
+        attackRotatingLasersUnion->setAttacks(
+            mkU<AttackRotatingLasers>(this->laserTelegraph, this->laser, 6, 60.0, 15.0, 2, 2, 7, 0),
+            mkU<AttackRepeatingShotgun>(ActionShotgun::fromCone(this->bullet, 2, 4.0, 30.0).setProjSpeed(150.0).setStackRepeat(6),
+                7 * (2 + 2), 0, [](int i) { return -18 * i; })
+        );
+        antRotatingLasers->attack = std::move(attackRotatingLasersUnion);
         antRotatingLasers->transitions = {
             {"rest", 1}
         };

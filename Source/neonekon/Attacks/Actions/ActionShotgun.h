@@ -25,6 +25,7 @@ private:
 
 public:
 	static ActionShotgun fromCone(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, float totalSpread, float aimDirection);
+	static ActionShotgun fromSingleBullet(TSubclassOf<class AProjectileBase> projectileClass, float aimDirection);
 	static ActionShotgun fromCircle(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, float angleOffset);
 	// TODO option to aim at player, maybe make angleStart a function pointer that can return a constant or aim at the player
 
