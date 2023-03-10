@@ -11,7 +11,7 @@
 
 struct Transition {
 	std::string id;
-	int weight;
+	int weight = 1;
 };
 
 struct AttackAndTransitions {
