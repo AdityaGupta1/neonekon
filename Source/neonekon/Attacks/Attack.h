@@ -24,7 +24,7 @@ public:
 	Attack& operator=(const Attack&) = delete;
 	virtual ~Attack() = default;
 
-	bool doNextAction(AActor& actor); // return true if attack is done
-	bool isDone() const;
-	void reset();
+	virtual bool doNextAction(AActor& actor); // return true if attack is done
+	virtual bool isDone() const;
+	virtual void reset();
 };

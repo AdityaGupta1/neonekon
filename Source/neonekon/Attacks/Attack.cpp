@@ -3,6 +3,8 @@
 
 #include "Attack.h"
 
+#include "Actions/ActionRest.h"
+
 Attack::Attack()
     : actions(), nextAction(0)
 {}
