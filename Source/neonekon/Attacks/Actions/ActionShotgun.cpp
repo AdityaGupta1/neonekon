@@ -5,18 +5,18 @@
 
 #include "Engine/World.h"
 
-ActionShotgun::ActionShotgun(TSubclassOf<class AActor> projectileClass, int numBullets, float angleStart, float bulletSpacing)
+ActionShotgun::ActionShotgun(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, float angleStart, float bulletSpacing)
     : projectileClass(projectileClass), numBullets(numBullets), angleStart(angleStart), bulletSpacing(bulletSpacing)
 {}
 
-ActionShotgun ActionShotgun::fromCone(TSubclassOf<class AActor> projectileClass, int numBullets, float totalSpread, float aimDirection)
+ActionShotgun ActionShotgun::fromCone(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, float totalSpread, float aimDirection)
 {
     float angleStart = aimDirection - (totalSpread / 2);
     float bulletSpacing = totalSpread / (numBullets - 1);
     return ActionShotgun(projectileClass, numBullets, angleStart, bulletSpacing);
 }
 
-ActionShotgun ActionShotgun::fromCircle(TSubclassOf<class AActor> projectileClass, int numBullets, float angleOffset)
+ActionShotgun ActionShotgun::fromCircle(TSubclassOf<class AProjectileBase> projectileClass, int numBullets, float angleOffset)
 {
     float angleStart = angleOffset;
     float bulletSpacing = 360.0f / numBullets;
@@ -25,21 +25,14 @@ ActionShotgun ActionShotgun::fromCircle(TSubclassOf<class AActor> projectileClas
 
 void ActionShotgun::doAction(AActor& actor)
 {
-    UWorld* world = actor.GetWorld();
-    if (!world) 
-    {
-        return;
-    }
-
-    FActorSpawnParameters spawnParams;
-    spawnParams.Owner = &actor;
-    spawnParams.Instigator = actor.GetInstigator();
+    const FVector location = actor.GetActorLocation();
+    const FVector scale(1.0f);
 
     float angle = angleStart;
     for (int i = 0; i < numBullets; ++i)
     {
-        FRotator rotation(0, angle, 0);
-        world->SpawnActor<AActor>(projectileClass, actor.GetActorLocation(), rotation, spawnParams);
+        const FRotator rotation(0, angle, 0);
+        spawnProjectile(actor, projectileClass, FTransform(rotation, location, scale));
         angle += bulletSpacing;
     }
 }
