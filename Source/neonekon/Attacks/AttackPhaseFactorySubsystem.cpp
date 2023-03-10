@@ -10,14 +10,16 @@
 #include "Attacks/AttackDebugPrintNumbers.h"
 #include "Attacks/AttackRest.h"
 #include "Attacks/AttackAlternatingRings.h"
+#include "Attacks/AttackRotatingLasers.h"
 
 #define ANT AttackAndTransitions
 
-// TSubclassOf<class AActor> getProjectile(std::string path)
-// {
-//     ConstructorHelpers::FObjectFinder<UBlueprint> projectile(UTF8_TO_TCHAR(path.c_str()));
-//     return (UClass*) projectile.Object->GeneratedClass;
-// }
+#define LOAD(path, varName) {\
+    ConstructorHelpers::FObjectFinder<UBlueprint> projectile(TEXT(path));\
+    if (projectile.Object) {\
+        varName = (UClass*)projectile.Object->GeneratedClass;\
+    }\
+}
 
 UAttackPhaseFactorySubsystem::UAttackPhaseFactorySubsystem()
     : UGameInstanceSubsystem(), phaseFunctionMap()
@@ -25,8 +27,10 @@ UAttackPhaseFactorySubsystem::UAttackPhaseFactorySubsystem()
     phaseFunctionMap[FString(TEXT("debug"))] = &UAttackPhaseFactorySubsystem::createDebug;
     phaseFunctionMap[FString(TEXT("dog 1"))] = &UAttackPhaseFactorySubsystem::createDog1;
 
-    ConstructorHelpers::FObjectFinder<UBlueprint> projectile(TEXT("/Script/Engine.Blueprint'/Game/Projectiles/Bullet.Bullet'"));
-    bullet = (UClass*)projectile.Object->GeneratedClass;
+    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/Bullet.Bullet'", bullet);
+
+    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/LineTelegraph.LineTelegraph'", laserTelegraph);
+    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/Laser.Laser'", laser);
 }
 
 void UAttackPhaseFactorySubsystem::createPhases(const FString id, std::vector<uPtr<AttackPhase>>& phases)
@@ -65,16 +69,24 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
     uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
-        antAlterntingRings->attack = mkU<AttackAlternatingRings>(this->bullet, 12, 4, 0.0, 300);
+        antAlterntingRings->attack = mkU<AttackAlternatingRings>(this->bullet, 12, 0.0, 4, 300);
         antAlterntingRings->transitions = {
             {"rest", 1}
         };
         phase1->addAnt("alternating rings", std::move(antAlterntingRings));
 
+        uPtr<ANT> antRotatingLasers = mkU<ANT>();
+        antRotatingLasers->attack = mkU<AttackRotatingLasers>(this->laserTelegraph, this->laser, 6, 60.0, 15.0, 2, 2, 7, 0);
+        antRotatingLasers->transitions = {
+            {"rest", 1}
+        };
+        phase1->addAnt("rotating lasers", std::move(antRotatingLasers));
+
         uPtr<ANT> antRest = mkU<ANT>();
-        antRest->attack = mkU<AttackRest>(4);
+        antRest->attack = mkU<AttackRest>(2);
         antRest->transitions = {
-            {"alternating rings", 1}
+            {"alternating rings", 2},
+            {"rotating lasers", 1}
         };
         phase1->addAnt("rest", std::move(antRest));
 

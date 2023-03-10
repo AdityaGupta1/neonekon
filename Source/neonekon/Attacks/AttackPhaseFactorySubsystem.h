@@ -29,6 +29,9 @@ private:
 
     TSubclassOf<class AProjectileBase> bullet;
 
+    TSubclassOf<class AProjectileBase> laserTelegraph;
+    TSubclassOf<class AProjectileBase> laser;
+
     void createDebug(std::vector<std::unique_ptr<AttackPhase>>& phases);
 
     void createDog1(std::vector<std::unique_ptr<AttackPhase>>& phases);

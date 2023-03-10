@@ -5,7 +5,7 @@
 
 #include "neonekon/Attacks/Actions/ActionShotgun.h"
 
-AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AProjectileBase> projClass, int numBullets, int duration, float angleOffset, float projSpeed)
+AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AProjectileBase> projClass, int numBullets, float angleOffset, int duration, float projSpeed)
     : Attack()
 {
     float alternateAngleOffset = 180.0f / numBullets;
