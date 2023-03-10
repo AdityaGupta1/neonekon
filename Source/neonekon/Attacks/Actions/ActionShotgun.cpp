@@ -24,6 +24,12 @@ ActionShotgun ActionShotgun::fromCircle(TSubclassOf<class AProjectileBase> proje
     return ActionShotgun(projectileClass, numBullets, angleStart, bulletSpacing);
 }
 
+ActionShotgun& ActionShotgun::setProjSpeed(float projSpeed)
+{
+    this->setProjSetupFunction([=](AProjectileBase* proj) { proj->speed = projSpeed; });
+    return *this;
+}
+
 ActionShotgun& ActionShotgun::setStackRepeat(int numStacks, float angleOffset)
 {
     this->stacks = numStacks;

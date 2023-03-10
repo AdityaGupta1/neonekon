@@ -18,8 +18,7 @@ AttackAlternatingRings::AttackAlternatingRings(TSubclassOf<class AProjectileBase
             angleOffsetReal += alternateAngleOffset;
         }
 
-        ActionShotgun action = ActionShotgun::fromCircle(projClass, numBullets, angleOffsetReal);
-        action.setProjSetupFunction([=](AProjectileBase* proj) { proj->speed = projSpeed; });
+        ActionShotgun action = ActionShotgun::fromCircle(projClass, numBullets, angleOffsetReal).setProjSpeed(projSpeed);
         this->actions.push_back(std::make_unique<ActionShotgun>(action));
     }
 }

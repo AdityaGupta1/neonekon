@@ -81,8 +81,8 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
         };
 
         uPtr<ANT> antWindmill = mkU<ANT>();
-        antWindmill->attack = mkU<AttackRepeatingShotgun>(ActionShotgun::fromCone(this->bullet, 5, 20, 0).setStackRepeat(4),
-            10, 0, [](int i) { return 10 * i; });
+        antWindmill->attack = mkU<AttackRepeatingShotgun>(ActionShotgun::fromCone(this->bullet, 5, 20, 0)
+            .setProjSpeed(200.0).setStackRepeat(4), 10, 0, [](int i) { return 10 * i; });
         antWindmill->transitions = {
             {"rest", 1}
         };
@@ -90,8 +90,8 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
         uPtr<ANT> antRest = mkU<ANT>();
         antRest->attack = mkU<AttackRest>(2);
         antRest->transitions = {
-            //{"alternating rings", 2},
-            //{"rotating lasers", 1},
+            {"alternating rings", 2},
+            {"rotating lasers", 1},
             {"windmill", 1}
         };
 
