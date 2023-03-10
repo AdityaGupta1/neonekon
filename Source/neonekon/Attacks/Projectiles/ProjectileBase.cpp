@@ -5,6 +5,7 @@
 
 // Sets default values
 AProjectileBase::AProjectileBase()
+	: speed(100), durationBeats(4)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;

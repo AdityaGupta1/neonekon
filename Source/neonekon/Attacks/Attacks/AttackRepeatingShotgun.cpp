@@ -12,7 +12,10 @@ AttackRepeatingShotgun::AttackRepeatingShotgun(ActionShotgun actionShotgun, int 
     for (int i = 0; i < numShotguns; ++i)
     {
         ActionShotgun newAction(actionShotgun);
-        newAction.addAngleOffset(angleOffsetFunction(i));
+        if (angleOffsetFunction != nullptr)
+        {
+            newAction.addAngleOffset(angleOffsetFunction(i));
+        }
         this->actions.push_back(std::make_unique<ActionShotgun>(newAction));
 
         if (i != numShotguns - 1) 

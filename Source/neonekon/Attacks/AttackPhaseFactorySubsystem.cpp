@@ -80,15 +80,24 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
             {"rest", 1}
         };
 
+        uPtr<ANT> antWindmill = mkU<ANT>();
+        antWindmill->attack = mkU<AttackRepeatingShotgun>(ActionShotgun::fromCone(this->bullet, 5, 20, 0).setStackRepeat(4),
+            10, 0, [](int i) { return 10 * i; });
+        antWindmill->transitions = {
+            {"rest", 1}
+        };
+
         uPtr<ANT> antRest = mkU<ANT>();
         antRest->attack = mkU<AttackRest>(2);
         antRest->transitions = {
-            {"alternating rings", 2},
-            {"rotating lasers", 1}
+            //{"alternating rings", 2},
+            //{"rotating lasers", 1},
+            {"windmill", 1}
         };
 
         phase1->addAnt("alternating rings", std::move(antAlterntingRings));
         phase1->addAnt("rotating lasers", std::move(antRotatingLasers));
+        phase1->addAnt("windmill", std::move(antWindmill));
         phase1->addAnt("rest", std::move(antRest));
 
         phase1->setAnt("rest");
