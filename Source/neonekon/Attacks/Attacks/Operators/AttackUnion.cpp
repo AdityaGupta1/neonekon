@@ -34,7 +34,17 @@ void AttackUnion::setAttacks(std::unique_ptr<Attack> attack1Ptr, std::unique_ptr
 
 bool AttackUnion::doNextAction(AActor& actor)
 {
-    return attack1->doNextAction(actor) & attack2->doNextAction(actor);
+    if (!attack1->isDone())
+    {
+        attack1->doNextAction(actor);
+    }
+
+    if (!attack2->isDone())
+    {
+        attack2->doNextAction(actor);
+    }
+
+    return isDone();
 }
 
 bool AttackUnion::isDone() const
