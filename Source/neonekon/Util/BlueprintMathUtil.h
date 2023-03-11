@@ -13,6 +13,9 @@ UCLASS()
 class NEONEKON_API UBlueprintMathUtil : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
+
+	UFUNCTION(BlueprintPure, Category = "Math|Integer")
+	static bool isEven(int x);
 	
 	UFUNCTION(BlueprintPure, Category = "Math|Float")
 	static float smoothstep(float min = 0, float max = 1, float x = 0);
