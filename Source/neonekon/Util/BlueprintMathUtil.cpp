@@ -3,6 +3,11 @@
 
 #include "BlueprintMathUtil.h"
 
+bool UBlueprintMathUtil::isEven(int x)
+{
+    return x % 2 == 0;
+}
+
 float UBlueprintMathUtil::smoothstep(float min, float max, float x)
 {
     x = std::clamp((x - min) / (max - min), 0.0f, 1.0f);
