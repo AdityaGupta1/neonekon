@@ -16,6 +16,8 @@ public:
 	float speed;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile")
 	int durationBeats;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile")
+	bool friendly;
 
 	// Sets default values for this actor's properties
 	AProjectileBase();
