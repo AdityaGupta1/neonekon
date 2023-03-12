@@ -26,6 +26,7 @@ void ActionSpawnProjectiles::spawnProjectile(AActor& originator, TSubclassOf<cla
     spawnParams.Instigator = originator.GetInstigator();
 
     AProjectileBase* proj = world->SpawnActorDeferred<AProjectileBase>(projClass, transform);
+    proj->friendly = false;
     if (this->projSetupFunction != nullptr) 
     {
         this->projSetupFunction(proj);
