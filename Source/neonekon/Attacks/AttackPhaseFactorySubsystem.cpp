@@ -17,9 +17,9 @@
 #define ANT AttackAndTransitions
 
 #define LOAD(path, varName) {\
-    ConstructorHelpers::FObjectFinder<UBlueprint> projectile(TEXT(path));\
+    ConstructorHelpers::FObjectFinder<UClass> projectile(TEXT(path));\
     if (projectile.Object) {\
-        varName = (UClass*)projectile.Object->GeneratedClass;\
+        varName = projectile.Object;\
     }\
 }
 
@@ -29,10 +29,10 @@ UAttackPhaseFactorySubsystem::UAttackPhaseFactorySubsystem()
     phaseFunctionMap[FString(TEXT("debug"))] = &UAttackPhaseFactorySubsystem::createDebug;
     phaseFunctionMap[FString(TEXT("dog 1"))] = &UAttackPhaseFactorySubsystem::createDog1;
 
-    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/Bullet.Bullet'", bullet);
+    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/Bullet.Bullet_C'", bullet);
 
-    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/LineTelegraph.LineTelegraph'", laserTelegraph);
-    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/Laser.Laser'", laser);
+    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/LineTelegraph.LineTelegraph_C'", laserTelegraph);
+    LOAD("/Script/Engine.Blueprint'/Game/Projectiles/Laser.Laser_C'", laser);
 }
 
 void UAttackPhaseFactorySubsystem::createPhases(const FString id, std::vector<uPtr<AttackPhase>>& phases)
