@@ -35,13 +35,13 @@ UAttackPhaseFactorySubsystem::UAttackPhaseFactorySubsystem()
     LOAD("/Script/Engine.Blueprint'/Game/Projectiles/Laser.Laser_C'", laser);
 }
 
-void UAttackPhaseFactorySubsystem::createPhases(const FString id, std::vector<uPtr<AttackPhase>>& phases)
+void UAttackPhaseFactorySubsystem::createPhases(const FString id, std::vector<sPtr<AttackPhase>>& phases)
 {
     phases.clear();
     phaseFunctionMap[id](*this, phases);
 }
 
-void UAttackPhaseFactorySubsystem::createDebug(std::vector<uPtr<AttackPhase>>& phases)
+void UAttackPhaseFactorySubsystem::createDebug(std::vector<sPtr<AttackPhase>>& phases)
 {
     uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
     {
@@ -66,9 +66,9 @@ void UAttackPhaseFactorySubsystem::createDebug(std::vector<uPtr<AttackPhase>>& p
 }
 
 
-void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& phases)
+void UAttackPhaseFactorySubsystem::createDog1(std::vector<sPtr<AttackPhase>>& phases)
 {
-    uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
+    sPtr<AttackPhase> phase1 = mkS<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
         antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 8, 0.0, 4, 250);
@@ -115,7 +115,7 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
         phase1->setAnt("rest 1");
     }
 
-    uPtr<AttackPhase> phase2 = mkU<AttackPhase>();
+    sPtr<AttackPhase> phase2 = mkS<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
         antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 12, 0.0, 4, 300);
@@ -166,6 +166,7 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
         phase2->setAnt("rest 1");
     }
 
-    phases.push_back(std::move(phase1));
-    phases.push_back(std::move(phase2));
+    phases.push_back(phase1);
+    phases.push_back(phase1);
+    phases.push_back(phase2);
 }

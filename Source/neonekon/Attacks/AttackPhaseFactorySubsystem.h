@@ -22,17 +22,17 @@ class NEONEKON_API UAttackPhaseFactorySubsystem : public UGameInstanceSubsystem
 public:
     UAttackPhaseFactorySubsystem();
 
-    void createPhases(const FString id, std::vector<std::unique_ptr<AttackPhase>>& phases);
+    void createPhases(const FString id, std::vector<std::shared_ptr<AttackPhase>>& phases);
 
 private:
-    std::map<FString, std::function<void(UAttackPhaseFactorySubsystem&, std::vector<std::unique_ptr<AttackPhase>>&)>> phaseFunctionMap;
+    std::map<FString, std::function<void(UAttackPhaseFactorySubsystem&, std::vector<std::shared_ptr<AttackPhase>>&)>> phaseFunctionMap;
 
     TSubclassOf<class AProjectileBase> bullet;
 
     TSubclassOf<class AProjectileBase> laserTelegraph;
     TSubclassOf<class AProjectileBase> laser;
 
-    void createDebug(std::vector<std::unique_ptr<AttackPhase>>& phases);
+    void createDebug(std::vector<std::shared_ptr<AttackPhase>>& phases);
 
-    void createDog1(std::vector<std::unique_ptr<AttackPhase>>& phases);
+    void createDog1(std::vector<std::shared_ptr<AttackPhase>>& phases);
 };

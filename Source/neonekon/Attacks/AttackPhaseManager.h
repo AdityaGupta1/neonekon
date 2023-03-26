@@ -17,7 +17,7 @@ class NEONEKON_API UAttackPhaseManager : public UObject
 	GENERATED_BODY()
 
 private:
-	std::vector<std::unique_ptr<AttackPhase>> phases;
+	std::vector<std::shared_ptr<AttackPhase>> phases;
 	int currentPhase;
 
 	bool isPhaseTransitionQueued;
