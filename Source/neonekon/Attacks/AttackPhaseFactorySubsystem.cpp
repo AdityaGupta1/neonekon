@@ -71,22 +71,26 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<sPtr<AttackPhase>>& ph
     sPtr<AttackPhase> phase1 = mkS<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
-        antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 8, 0.0, 4, 250);
+        antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 8, 0.0, 4, 240);
         antAlterntingRings->transitions = {
             {"rest 1"}
         };
 
         uPtr<ANT> antWindmill = mkU<ANT>();
         antWindmill->attack = mkU<AttackRepeatingShotgun>(ActionShotgun::fromCone(this->bullet, 4, 20, 0)
-            .setProjSpeed(150.0).setStackRepeat(3), 10, 0, [](int i) { return -8 * i; });
+            .setProjSpeed(160.0).setStackRepeat(3), 10, 0, [](int i) { return -8 * i; });
         antWindmill->transitions = {
             {"rest 1"}
         };
 
         uPtr<ANT> antRotatingLasers = mkU<ANT>();
-        uPtr<AttackRotatingLasers> attackRotatingLasers =
-            mkU<AttackRotatingLasers>(this->laserTelegraph, this->laser, 4, 0, 15.0, 2, 2, 7, 0);
-        antRotatingLasers->attack = std::move(attackRotatingLasers);
+        uPtr<AttackUnion> attackRotatingLasersUnion = mkU<AttackUnion>();
+        attackRotatingLasersUnion->setAttacks(
+            mkU<AttackRotatingLasers>(this->laserTelegraph, this->laser, 4, 0, 15.0, 2, 2, 7, 0),
+            mkU<AttackRepeatingShotgun>(ActionShotgun::fromSingleBullet(this->bullet, 45.0).setProjSpeed(160.0).setStackRepeat(3),
+                7 * (2 + 2), 0, [](int i) { return -17 * i; })
+        );
+        antRotatingLasers->attack = std::move(attackRotatingLasersUnion);
         antRotatingLasers->transitions = {
             {"rest 2"}
         };
@@ -118,7 +122,7 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<sPtr<AttackPhase>>& ph
     sPtr<AttackPhase> phase2 = mkS<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
-        antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 12, 0.0, 4, 300);
+        antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 12, 0.0, 4, 320);
         antAlterntingRings->transitions = {
             {"rest 1"}
         };
