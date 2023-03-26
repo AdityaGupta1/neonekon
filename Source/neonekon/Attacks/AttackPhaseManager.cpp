@@ -28,3 +28,9 @@ void UAttackPhaseManager::queuePhaseTransition()
 {
     this->isPhaseTransitionQueued = true;
 }
+
+void UAttackPhaseManager::doPhaseTransition()
+{
+    this->currentPhase++;
+    this->isPhaseTransitionQueued = false;
+}

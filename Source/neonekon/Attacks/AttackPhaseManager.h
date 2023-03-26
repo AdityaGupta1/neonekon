@@ -17,7 +17,7 @@ class NEONEKON_API UAttackPhaseManager : public UObject
 	GENERATED_BODY()
 
 private:
-	std::vector<std::unique_ptr<AttackPhase>> phases;
+	std::vector<std::shared_ptr<AttackPhase>> phases;
 	int currentPhase;
 
 	bool isPhaseTransitionQueued;
@@ -29,8 +29,11 @@ public:
 	void loadPhases(const FString phasesId, AActor* actor);
 
 	UFUNCTION(BlueprintCallable)
-	bool onBeat(AActor* actor); // return true if should transition to next phase (transition queued and attack done
+	bool onBeat(AActor* actor); // return true if should transition to next phase (transition queued and attack done)
 
 	UFUNCTION(BlueprintCallable)
 	void queuePhaseTransition();
+
+	UFUNCTION(BlueprintCallable)
+	void doPhaseTransition();
 };
