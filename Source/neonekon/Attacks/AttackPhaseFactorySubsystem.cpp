@@ -71,6 +71,53 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
     uPtr<AttackPhase> phase1 = mkU<AttackPhase>();
     {
         uPtr<ANT> antAlterntingRings = mkU<ANT>();
+        antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 8, 0.0, 4, 250);
+        antAlterntingRings->transitions = {
+            {"rest 1"}
+        };
+
+        uPtr<ANT> antWindmill = mkU<ANT>();
+        antWindmill->attack = mkU<AttackRepeatingShotgun>(ActionShotgun::fromCone(this->bullet, 4, 20, 0)
+            .setProjSpeed(150.0).setStackRepeat(3), 10, 0, [](int i) { return -8 * i; });
+        antWindmill->transitions = {
+            {"rest 1"}
+        };
+
+        uPtr<ANT> antRotatingLasers = mkU<ANT>();
+        uPtr<AttackRotatingLasers> attackRotatingLasers =
+            mkU<AttackRotatingLasers>(this->laserTelegraph, this->laser, 4, 0, 15.0, 2, 2, 7, 0);
+        antRotatingLasers->attack = std::move(attackRotatingLasers);
+        antRotatingLasers->transitions = {
+            {"rest 2"}
+        };
+
+        uPtr<ANT> antRest1 = mkU<ANT>();
+        antRest1->attack = mkU<AttackRest>(2);
+        antRest1->transitions = {
+            {"alternating rings", 3},
+            {"windmill", 2},
+            {"rotating lasers", 2},
+        };
+
+        uPtr<ANT> antRest2 = mkU<ANT>();
+        antRest2->attack = mkU<AttackRest>(4);
+        antRest2->transitions = {
+            {"alternating rings", 3},
+            {"windmill", 2}
+        };
+
+        phase1->addAnt("alternating rings", std::move(antAlterntingRings));
+        phase1->addAnt("windmill", std::move(antWindmill));
+        phase1->addAnt("rotating lasers", std::move(antRotatingLasers));
+        phase1->addAnt("rest 1", std::move(antRest1));
+        phase1->addAnt("rest 2", std::move(antRest2));
+
+        phase1->setAnt("rest 1");
+    }
+
+    uPtr<AttackPhase> phase2 = mkU<AttackPhase>();
+    {
+        uPtr<ANT> antAlterntingRings = mkU<ANT>();
         antAlterntingRings->attack = AttackRepeatingShotgun::alternatingRings(this->bullet, 12, 0.0, 4, 300);
         antAlterntingRings->transitions = {
             {"rest 1"}
@@ -110,14 +157,15 @@ void UAttackPhaseFactorySubsystem::createDog1(std::vector<uPtr<AttackPhase>>& ph
             {"windmill", 2}
         };
 
-        phase1->addAnt("alternating rings", std::move(antAlterntingRings));
-        phase1->addAnt("windmill", std::move(antWindmill));
-        phase1->addAnt("rotating lasers", std::move(antRotatingLasers));
-        phase1->addAnt("rest 1", std::move(antRest1));
-        phase1->addAnt("rest 2", std::move(antRest2));
+        phase2->addAnt("alternating rings", std::move(antAlterntingRings));
+        phase2->addAnt("windmill", std::move(antWindmill));
+        phase2->addAnt("rotating lasers", std::move(antRotatingLasers));
+        phase2->addAnt("rest 1", std::move(antRest1));
+        phase2->addAnt("rest 2", std::move(antRest2));
 
-        phase1->setAnt("rest 1");
+        phase2->setAnt("rest 1");
     }
 
     phases.push_back(std::move(phase1));
+    phases.push_back(std::move(phase2));
 }
