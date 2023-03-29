@@ -10,7 +10,7 @@ public class neonekon : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 
-		// PrivateDependencyModuleNames.AddRange(new string[] { "UnrealEd" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "UnrealEd" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
